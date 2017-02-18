@@ -22,6 +22,13 @@
     })
 
     columns.push({
+        title: 'address',
+        field: 'address|line1',
+        visible: true,
+        sortable: false
+    })
+
+    columns.push({
         title: 'created date',
         field: 'created_at',
         filter(val) {

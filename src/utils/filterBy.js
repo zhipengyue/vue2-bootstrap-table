@@ -7,8 +7,7 @@
         columns.forEach(col => {
             if(!col.field) return
 
-            let val = row[col.field]
-
+            let val = getrowdata(row,col)
             if(!val) return
 
             //if(col.filter) {
@@ -24,6 +23,34 @@
     return res
 }
 
+function getrowdata(row,col)
+{
+    if(col.field.indexOf('|')<0)
+    {
+        return row[col.field]
+    }else{
+        let childarr = col.field.split('|')
+        return recursiveRowChild(row,childarr,0)
+    }
+}
+
+function recursiveRowChild(row,childarr,i)
+{
+    console.log(i)
+    if(childarr.length>0)
+    {
+        if(!row[childarr[0]])
+        {
+            return ''
+        }else{
+            let data = childarr.shift()
+            return recursiveRowChild(row[data],childarr,i)
+        }
+       
+    }else{
+        return row
+    }
+}
 function myFilterBy(rows, columns, q, delimiter) {
     let arr = getSearchArr(rows, columns)
     return filterBy(arr, q, delimiter)
